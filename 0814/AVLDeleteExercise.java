@@ -1,6 +1,8 @@
+
 public class AVLDeleteExercise {
 
     class Node {
+
         int key, height;
         Node left, right;
 
@@ -18,16 +20,17 @@ public class AVLDeleteExercise {
     }
 
     private Node insert(Node node, int key) {
-        if (node == null)
+        if (node == null) {
             return new Node(key);
+        }
 
-        if (key < node.key)
-            node.left = insert(node.left, key);
-        else if (key > node.key)
-            node.right = insert(node.right, key);
-        else
+        if (key < node.key) {
+            node.left = insert(node.left, key); 
+        }else if (key > node.key) {
+            node.right = insert(node.right, key); 
+        }else {
             return node; // 不允許重複值
-
+        }
         updateHeight(node);
         return rebalance(node);
     }
@@ -39,8 +42,9 @@ public class AVLDeleteExercise {
 
     // 真正的刪除邏輯
     private Node delete(Node node, int key) {
-        if (node == null)
+        if (node == null) {
             return null;
+        }
 
         if (key < node.key) {
             node.left = delete(node.left, key);
@@ -59,8 +63,9 @@ public class AVLDeleteExercise {
             }
         }
 
-        if (node == null)
+        if (node == null) {
             return null;
+        }
 
         updateHeight(node);
         return rebalance(node);
@@ -138,8 +143,9 @@ public class AVLDeleteExercise {
 
     // 找最小值（後繼用）
     private Node findMin(Node node) {
-        while (node.left != null)
+        while (node.left != null) {
             node = node.left;
+        }
         return node;
     }
 
@@ -161,9 +167,10 @@ public class AVLDeleteExercise {
     public static void main(String[] args) {
         AVLDeleteExercise tree = new AVLDeleteExercise();
 
-        int[] keys = { 20, 10, 30, 5, 15, 25, 35 };
-        for (int key : keys)
+        int[] keys = {20, 10, 30, 5, 15, 25, 35};
+        for (int key : keys) {
             tree.insert(key);
+        }
 
         System.out.println("中序走訪（刪除前）：");
         tree.inorder();

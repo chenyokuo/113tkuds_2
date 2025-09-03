@@ -1,6 +1,8 @@
+
 import java.util.ArrayList;
 
 public class BasicMinHeapPractice {
+
     private ArrayList<Integer> heap;
 
     public BasicMinHeapPractice() {
@@ -13,7 +15,9 @@ public class BasicMinHeapPractice {
     }
 
     public int extractMin() {
-        if (isEmpty()) throw new IllegalStateException("Heap is empty");
+        if (isEmpty()) {
+            throw new IllegalStateException("Heap is empty");
+        }
 
         int min = heap.get(0);
         int last = heap.remove(heap.size() - 1);
@@ -27,7 +31,9 @@ public class BasicMinHeapPractice {
     }
 
     public int getMin() {
-        if (isEmpty()) throw new IllegalStateException("Heap is empty");
+        if (isEmpty()) {
+            throw new IllegalStateException("Heap is empty");
+        }
         return heap.get(0);
     }
 

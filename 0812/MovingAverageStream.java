@@ -1,6 +1,8 @@
+
 import java.util.*;
 
 public class MovingAverageStream {
+
     private int size;
     private Queue<Integer> window;
     private long sum;
@@ -95,7 +97,9 @@ public class MovingAverageStream {
             int num = heap.peek();
             if (delayed.containsKey(num)) {
                 delayed.put(num, delayed.get(num) - 1);
-                if (delayed.get(num) == 0) delayed.remove(num);
+                if (delayed.get(num) == 0) {
+                    delayed.remove(num);
+                }
                 heap.poll();
             } else {
                 break;
@@ -105,7 +109,9 @@ public class MovingAverageStream {
 
     // 取得當前視窗中位數
     public double getMedian() {
-        if (window.isEmpty()) return 0.0;
+        if (window.isEmpty()) {
+            return 0.0;
+        }
         if (maxHeap.size() > minHeap.size()) {
             return maxHeap.peek();
         } else {
@@ -115,13 +121,17 @@ public class MovingAverageStream {
 
     // 取得視窗最小值
     public int getMin() {
-        if (minDeque.isEmpty()) throw new NoSuchElementException("視窗為空");
+        if (minDeque.isEmpty()) {
+            throw new NoSuchElementException("視窗為空");
+        }
         return minDeque.peekFirst();
     }
 
     // 取得視窗最大值
     public int getMax() {
-        if (maxDeque.isEmpty()) throw new NoSuchElementException("視窗為空");
+        if (maxDeque.isEmpty()) {
+            throw new NoSuchElementException("視窗為空");
+        }
         return maxDeque.peekFirst();
     }
 

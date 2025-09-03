@@ -1,6 +1,8 @@
+
 public class AVLBasicExercise {
 
     static class Node {
+
         int data;
         Node left, right;
         int height;
@@ -30,24 +32,31 @@ public class AVLBasicExercise {
     }
 
     private Node insertRecursive(Node node, int data) {
-        if (node == null) return new Node(data);
+        if (node == null) {
+            return new Node(data);
+        }
 
-        if (data < node.data) node.left = insertRecursive(node.left, data);
-        else if (data > node.data) node.right = insertRecursive(node.right, data);
-        else return node; // duplicate
-
+        if (data < node.data) {
+            node.left = insertRecursive(node.left, data);
+        } else if (data > node.data) {
+            node.right = insertRecursive(node.right, data);
+        } else {
+            return node; // duplicate
+        }
         node.updateHeight();
 
         // 平衡修正
         int balance = node.getBalance();
 
         // LL
-        if (balance > 1 && data < node.left.data)
+        if (balance > 1 && data < node.left.data) {
             return rightRotate(node);
+        }
 
         // RR
-        if (balance < -1 && data > node.right.data)
+        if (balance < -1 && data > node.right.data) {
             return leftRotate(node);
+        }
 
         // LR
         if (balance > 1 && data > node.left.data) {
@@ -95,10 +104,17 @@ public class AVLBasicExercise {
     }
 
     private boolean searchRecursive(Node node, int data) {
-        if (node == null) return false;
-        if (node.data == data) return true;
-        if (data < node.data) return searchRecursive(node.left, data);
-        else return searchRecursive(node.right, data);
+        if (node == null) {
+            return false;
+        }
+        if (node.data == data) {
+            return true;
+        }
+        if (data < node.data) {
+            return searchRecursive(node.left, data);
+        } else {
+            return searchRecursive(node.right, data);
+        }
     }
 
     public int getHeight() {
@@ -110,12 +126,15 @@ public class AVLBasicExercise {
     }
 
     private int validateAVL(Node node) {
-        if (node == null) return 0;
+        if (node == null) {
+            return 0;
+        }
         int lh = validateAVL(node.left);
         int rh = validateAVL(node.right);
 
-        if (lh == -1 || rh == -1 || Math.abs(lh - rh) > 1)
+        if (lh == -1 || rh == -1 || Math.abs(lh - rh) > 1) {
             return -1;
+        }
 
         return Math.max(lh, rh) + 1;
     }

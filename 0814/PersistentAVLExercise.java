@@ -1,8 +1,11 @@
+
 import java.util.*;
 
 public class PersistentAVLExercise {
+
     // 不可變節點定義
     static class Node {
+
         final int key;
         final int height;
         final int size;
@@ -47,9 +50,13 @@ public class PersistentAVLExercise {
     public boolean search(int version, int key) {
         Node node = versions.get(version);
         while (node != null) {
-            if (key < node.key) node = node.left;
-            else if (key > node.key) node = node.right;
-            else return true;
+            if (key < node.key) {
+                node = node.left;
+            } else if (key > node.key) {
+                node = node.right;
+            } else {
+                return true;
+            }
         }
         return false;
     }
@@ -61,7 +68,9 @@ public class PersistentAVLExercise {
     }
 
     private void inOrder(Node node, List<Integer> result) {
-        if (node == null) return;
+        if (node == null) {
+            return;
+        }
         inOrder(node.left, result);
         result.add(node.key);
         inOrder(node.right, result);
@@ -69,7 +78,9 @@ public class PersistentAVLExercise {
 
     // === 插入（回傳新根） ===
     private Node insert(Node node, int key) {
-        if (node == null) return new Node(key, null, null);
+        if (node == null) {
+            return new Node(key, null, null);
+        }
         if (key < node.key) {
             return balance(new Node(node.key, insert(node.left, key), node.right));
         } else if (key > node.key) {

@@ -1,9 +1,11 @@
+
 import java.util.*;
 
 public class MergeKSortedArrays {
 
     // 包裝元素類
     private static class Element implements Comparable<Element> {
+
         int value;
         int arrayIndex;    // 來源陣列編號
         int elementIndex;  // 在來源陣列中的索引

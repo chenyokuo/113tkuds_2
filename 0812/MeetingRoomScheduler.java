@@ -1,10 +1,13 @@
+
 import java.util.*;
 
 public class MeetingRoomScheduler {
 
     // ----------- Part 1: 最少需要幾間會議室 -----------
     public static int minMeetingRooms(int[][] intervals) {
-        if (intervals == null || intervals.length == 0) return 0;
+        if (intervals == null || intervals.length == 0) {
+            return 0;
+        }
 
         // 以開始時間排序
         Arrays.sort(intervals, Comparator.comparingInt(a -> a[0]));
@@ -25,7 +28,9 @@ public class MeetingRoomScheduler {
 
     // ----------- Part 2: 最大化會議時間給定 N 個會議室 -----------
     public static int maxMeetingTimeWithFixedRooms(int[][] intervals, int rooms) {
-        if (intervals == null || intervals.length == 0 || rooms == 0) return 0;
+        if (intervals == null || intervals.length == 0 || rooms == 0) {
+            return 0;
+        }
 
         // 以結束時間排序（貪心）
         Arrays.sort(intervals, Comparator.comparingInt(a -> a[1]));

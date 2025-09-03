@@ -1,7 +1,10 @@
+
 import java.util.*;
 
 public class AVLLeaderboardSystem {
+
     private class AVLNode {
+
         String playerName;
         int score, height, size;
         AVLNode left, right;
@@ -18,7 +21,6 @@ public class AVLLeaderboardSystem {
     private Map<String, Integer> playerScores = new HashMap<>();
 
     // === 公開介面 ===
-
     public void addOrUpdatePlayer(String playerName, int score) {
         if (playerScores.containsKey(playerName)) {
             root = remove(root, playerName, playerScores.get(playerName));
@@ -28,7 +30,9 @@ public class AVLLeaderboardSystem {
     }
 
     public int getPlayerRank(String playerName) {
-        if (!playerScores.containsKey(playerName)) return -1;
+        if (!playerScores.containsKey(playerName)) {
+            return -1;
+        }
         return getRank(root, playerName, playerScores.get(playerName)) + 1; // 排名從 1 開始
     }
 
@@ -39,25 +43,33 @@ public class AVLLeaderboardSystem {
     }
 
     // === AVL Tree 基本操作 ===
-
     private AVLNode insert(AVLNode node, String name, int score) {
-        if (node == null) return new AVLNode(name, score);
+        if (node == null) {
+            return new AVLNode(name, score);
+        }
 
         int cmp = compare(name, score, node);
-        if (cmp < 0) node.left = insert(node.left, name, score);
-        else node.right = insert(node.right, name, score);
+        if (cmp < 0) {
+            node.left = insert(node.left, name, score);
+        } else {
+            node.right = insert(node.right, name, score);
+        }
 
         update(node);
         return balance(node);
     }
 
     private AVLNode remove(AVLNode node, String name, int score) {
-        if (node == null) return null;
+        if (node == null) {
+            return null;
+        }
 
         int cmp = compare(name, score, node);
-        if (cmp < 0) node.left = remove(node.left, name, score);
-        else if (cmp > 0) node.right = remove(node.right, name, score);
-        else {
+        if (cmp < 0) {
+            node.left = remove(node.left, name, score);
+        } else if (cmp > 0) {
+            node.right = remove(node.right, name, score);
+        } else {
             if (node.left == null || node.right == null) {
                 node = (node.left != null) ? node.left : node.right;
             } else {
@@ -75,7 +87,9 @@ public class AVLLeaderboardSystem {
     }
 
     private int getRank(AVLNode node, String name, int score) {
-        if (node == null) return 0;
+        if (node == null) {
+            return 0;
+        }
         int cmp = compare(name, score, node);
         if (cmp < 0) {
             return getRank(node.left, name, score);
@@ -89,7 +103,9 @@ public class AVLLeaderboardSystem {
     }
 
     private void getTopK(AVLNode node, int k, List<String> result) {
-        if (node == null || result.size() >= k) return;
+        if (node == null || result.size() >= k) {
+            return;
+        }
         getTopK(node.right, k, result);
         if (result.size() < k) {
             result.add(node.playerName);
@@ -98,7 +114,6 @@ public class AVLLeaderboardSystem {
     }
 
     // === AVL Helper ===
-
     private void update(AVLNode node) {
         int lh = height(node.left);
         int rh = height(node.right);
@@ -121,10 +136,14 @@ public class AVLLeaderboardSystem {
     private AVLNode balance(AVLNode node) {
         int bf = balanceFactor(node);
         if (bf > 1) {
-            if (balanceFactor(node.left) < 0) node.left = rotateLeft(node.left);
+            if (balanceFactor(node.left) < 0) {
+                node.left = rotateLeft(node.left);
+            }
             node = rotateRight(node);
         } else if (bf < -1) {
-            if (balanceFactor(node.right) > 0) node.right = rotateRight(node.right);
+            if (balanceFactor(node.right) > 0) {
+                node.right = rotateRight(node.right);
+            }
             node = rotateLeft(node);
         }
         return node;
@@ -151,7 +170,9 @@ public class AVLLeaderboardSystem {
     }
 
     private AVLNode getMin(AVLNode node) {
-        while (node.left != null) node = node.left;
+        while (node.left != null) {
+            node = node.left;
+        }
         return node;
     }
 
