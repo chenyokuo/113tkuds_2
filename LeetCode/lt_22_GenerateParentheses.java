@@ -2,40 +2,29 @@
 // 給定 n 對括號，請產生所有可能且有效的括號組合。
 // 有效括號需符合：每個左括號必須由右括號關閉，且順序正確。
 
-import java.util.*;
-
 class Solution {
 
+    private List<String> ans = new ArrayList<>();
+    private int n;
+
     public List<String> generateParenthesis(int n) {
-        List<String> ans = new ArrayList<>();
-        backtrack(ans, new StringBuilder(), 0, 0, n);
+        this.n = n;
+        dfs(0, 0, "");
         return ans;
     }
 
-    // 回溯函數
-    private void backtrack(List<String> ans, StringBuilder path, int open, int close, int n) {
-        // 若字串長度達到 2*n，代表完成一組合法組合
-        if (path.length() == 2 * n) {
-            ans.add(path.toString());
+    private void dfs(int l, int r, String t) {
+        if (l > n || r > n || l < r) {
             return;
         }
-
-        // 可以加入左括號，只要 open 還沒用完
-        if (open < n) {
-            path.append('(');
-            backtrack(ans, path, open + 1, close, n);
-            path.deleteCharAt(path.length() - 1); // 回溯
+        if (l == n && r == n) {
+            ans.add(t);
+            return;
         }
-
-        // 可以加入右括號，只要右括號數量小於左括號
-        if (close < open) {
-            path.append(')');
-            backtrack(ans, path, open, close + 1, n);
-            path.deleteCharAt(path.length() - 1); // 回溯
-        }
+        dfs(l + 1, r, t + "(");
+        dfs(l, r + 1, t + ")");
     }
 }
-
 /*
 解題思路：
 1. 採用回溯法（DFS）生成所有可能組合。

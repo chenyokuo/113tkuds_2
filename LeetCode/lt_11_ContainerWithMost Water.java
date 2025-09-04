@@ -5,30 +5,18 @@
 class Solution {
 
     public int maxArea(int[] height) {
-        // 以左右雙指針從邊界往內逼近
-        int l = 0, r = height.length - 1;
-
-        // best 用來記錄目前可得到的最大面積
-        int best = 0;
-
-        // 當左右指針尚未相遇時持續嘗試
-        while (l < r) {
-            // 由兩側高度的較小者決定可盛水的高度
-            int h = Math.min(height[l], height[r]);
-
-            // 面積 = 高度 * 寬度（寬度為 r - l）
-            best = Math.max(best, h * (r - l));
-
-            // 關鍵策略：移動「較矮」的那一側，才有機會提高高度，進而獲得更大面積
-            if (height[l] < height[r]) {
-                l++;      // 左側較矮 → 嘗試往內找更高的左邊
+        int i = 0, j = height.length - 1;
+        int ans = 0;
+        while (i < j) {
+            int t = Math.min(height[i], height[j]) * (j - i);
+            ans = Math.max(ans, t);
+            if (height[i] < height[j]) {
+                ++i;
             } else {
-                r--;      // 右側較矮或相等 → 往內找更高的右邊
+                --j;
             }
         }
-
-        // 回傳最大面積
-        return best;
+        return ans;
     }
 }
 /*

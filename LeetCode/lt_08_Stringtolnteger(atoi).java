@@ -2,46 +2,36 @@
 class Solution {
 
     public int myAtoi(String s) {
-        int n = s.length();
-        int i = 0;
-
-        // 1) skip leading spaces
-        while (i < n && s.charAt(i) == ' ') {
-            i++;
-        }
-
-        // empty after spaces
-        if (i == n) {
+        if (s == null) {
             return 0;
         }
-
-        // 2) sign
-        int sign = 1;
-        char ch = s.charAt(i);
-        if (ch == '+' || ch == '-') {
-            sign = (ch == '-') ? -1 : 1;
-            i++;
+        int n = s.length();
+        if (n == 0) {
+            return 0;
         }
-
-        // 3) read digits with overflow check
-        int res = 0;
-        final int LIMIT = 214748364; // Integer.MAX_VALUE / 10
-        while (i < n) {
-            char c = s.charAt(i);
-            if (c < '0' || c > '9') {
+        int i = 0;
+        while (s.charAt(i) == ' ') {
+            if (++i == n) {
+                return 0;
+            }
+        }
+        int sign = 1;
+        if (s.charAt(i) == '-') {
+            sign = -1;
+        }
+        if (s.charAt(i) == '-' || s.charAt(i) == '+') {
+            ++i;
+        }
+        int res = 0, flag = Integer.MAX_VALUE / 10;
+        for (int j = i; j < n; ++j) {
+            if (s.charAt(j) < '0' || s.charAt(j) > '9') {
                 break;
             }
-            int d = c - '0';
-
-            // 4) overflow clamp (before res = res*10 + d)
-            if (res > LIMIT || (res == LIMIT && d > (sign == 1 ? 7 : 8))) {
-                return sign == 1 ? Integer.MAX_VALUE : Integer.MIN_VALUE;
+            if (res > flag || (res == flag && s.charAt(j) > '7')) {
+                return sign > 0 ? Integer.MAX_VALUE : Integer.MIN_VALUE;
             }
-
-            res = res * 10 + d;
-            i++;
+            res = res * 10 + (s.charAt(j) - '0');
         }
-
         return sign * res;
     }
 }
